@@ -1,0 +1,259 @@
+.iti-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: all 0.3s ease;
+  border-left: 5px solid #ccc;
+}
+
+.iti-card.not_connected {
+  border-left-color: #e74c3c;
+}
+
+.iti-card.pending {
+  border-left-color: #f39c12;
+}
+
+.iti-card.connected {
+  border-left-color: #27ae60;
+}
+
+.iti-card:hover {
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+}
+
+.card-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-header h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1;
+}
+
+.expand-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 5px 10px;
+  transition: transform 0.3s;
+}
+
+.expand-btn:hover {
+  transform: scale(1.2);
+}
+
+.card-content {
+  padding: 20px;
+}
+
+.info-item {
+  margin-bottom: 12px;
+  display: flex;
+  flex-direction: column;
+}
+
+.info-item label {
+  font-weight: 600;
+  color: #333;
+  font-size: 0.9rem;
+  margin-bottom: 4px;
+}
+
+.info-item span {
+  color: #666;
+  word-break: break-word;
+}
+
+.info-item a {
+  color: #667eea;
+  text-decoration: none;
+}
+
+.info-item a:hover {
+  text-decoration: underline;
+}
+
+.contact-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+  flex-wrap: wrap;
+}
+
+.contact-btn {
+  flex: 1;
+  padding: 10px 12px;
+  border: 2px solid #e0e0e0;
+  border-radius: 6px;
+  background: white;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.3s;
+  min-width: 130px;
+}
+
+.contact-btn:hover:not(:disabled) {
+  background: #f5f5f5;
+  border-color: #667eea;
+}
+
+.contact-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.phone-btn:hover:not(:disabled) {
+  color: #25a2e8;
+}
+
+.email-btn:hover:not(:disabled) {
+  color: #e74c3c;
+}
+
+.card-expanded {
+  padding: 20px;
+  background: #f9f9f9;
+  border-top: 1px solid #e0e0e0;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 10px;
+  font-size: 0.95rem;
+}
+
+.status-options {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.radio-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.radio-label input[type="radio"] {
+  cursor: pointer;
+  width: 18px;
+  height: 18px;
+}
+
+.form-group textarea {
+  width: 100%;
+  padding: 10px;
+  border: 2px solid #e0e0e0;
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 0.95rem;
+  resize: vertical;
+  transition: border-color 0.3s;
+}
+
+.form-group textarea:focus {
+  outline: none;
+  border-color: #667eea;
+}
+
+.save-btn {
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.save-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.save-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.card-footer {
+  padding: 15px;
+  background: #f5f5f5;
+  border-top: 1px solid #e0e0e0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.9rem;
+  flex-wrap: wrap;
+}
+
+.status-badge {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-weight: 600;
+  display: inline-block;
+}
+
+.status-badge.not_connected {
+  background-color: #ffe0e0;
+  color: #c0392b;
+}
+
+.status-badge.pending {
+  background-color: #ffe8d1;
+  color: #d68910;
+}
+
+.status-badge.connected {
+  background-color: #d5f4e6;
+  color: #27ae60;
+}
+
+.remarks-preview {
+  color: #666;
+  font-style: italic;
+}
+
+@media (max-width: 480px) {
+  .card-header h3 {
+    font-size: 1rem;
+  }
+
+  .contact-buttons {
+    flex-direction: column;
+  }
+
+  .contact-btn {
+    min-width: auto;
+  }
+
+  .status-options {
+    flex-direction: column;
+  }
+}
