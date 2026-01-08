@@ -1,7 +1,0 @@
-nohup: ignoring input
-
-> iti-management-backend@1.0.0 start
-> node server.js
-
-Server running at http://localhost:5000
-Connected to SQLite database

@@ -6,7 +6,8 @@ import ImportButton from './components/ImportButton';
 import UploadButton from './components/UploadButton';
 
 // Use environment variable for API URL if available, otherwise use relative path for proxy
-const API_URL = process.env.REACT_APP_API_URL || '/api';
+// Normalize by removing a trailing slash to avoid double-slash requests
+const API_URL = (process.env.REACT_APP_API_URL || '/api').replace(/\/$/, '');
 
 function App() {
   const [itis, setItis] = useState([]);

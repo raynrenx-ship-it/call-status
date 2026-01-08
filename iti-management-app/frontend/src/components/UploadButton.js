@@ -2,7 +2,8 @@ import React, { useRef } from 'react';
 import axios from 'axios';
 import './UploadButton.css';
 
-const API_URL = process.env.REACT_APP_API_URL || '/api';
+// Normalize API URL to avoid trailing slash issues
+const API_URL = (process.env.REACT_APP_API_URL || '/api').replace(/\/$/, '');
 
 function UploadButton({ onUploadSuccess }) {
   const fileInputRef = useRef(null);
@@ -11,17 +12,20 @@ function UploadButton({ onUploadSuccess }) {
     const file = event.target.files[0];
     if (!file) return;
 
-    try {
-      // Create FormData and append file
-      const formData = new FormData();
-      formData.append('file', file);
+      try {
+        // Read the file as text and send JSON body to server (no file persistence)
+        const fileContent = await new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = (e) => resolve(e.target.result);
+          reader.onerror = (e) => reject(e);
+          reader.readAsText(file);
+        });
 
-      // Upload file to backend (multipart/form-data)
-      const response = await axios.post(`${API_URL}/upload`, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      });
+        const parsed = JSON.parse(fileContent);
+
+        const response = await axios.post(`${API_URL}/upload`, {
+          data: Array.isArray(parsed) ? parsed : [parsed]
+        });
 
       alert(response.data.message);
       if (onUploadSuccess) {
