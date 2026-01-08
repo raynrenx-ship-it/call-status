@@ -2,11 +2,6 @@
   "buildCommand": "cd frontend && npm run build",
   "outputDirectory": "frontend/build",
   "devCommand": "npm run dev",
-  "env": {
-    "REACT_APP_API_URL": {
-      "description": "API base URL for the ITI Management backend"
-    }
-  },
   "functions": {
     "api/**/*.js": {
       "memory": 1024,
