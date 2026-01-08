@@ -3,6 +3,7 @@ import axios from 'axios';
 import './App.css';
 import ITIList from './components/ITIList';
 import ImportButton from './components/ImportButton';
+import UploadButton from './components/UploadButton';
 
 // Use environment variable for API URL if available, otherwise use relative path for proxy
 const API_URL = process.env.REACT_APP_API_URL || '/api';
@@ -40,6 +41,10 @@ function App() {
     }
   };
 
+  const handleUploadSuccess = () => {
+    fetchItis();
+  };
+
   const handleStatusUpdate = async (id, status, remarks) => {
     try {
       await axios.put(`${API_URL}/itis/${id}`, {
@@ -63,6 +68,7 @@ function App() {
       <main className="app-main">
         <div className="controls">
           <ImportButton onImport={handleImport} />
+          <UploadButton onUploadSuccess={handleUploadSuccess} />
         </div>
 
         {error && <div className="error-message">{error}</div>}
