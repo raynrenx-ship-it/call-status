@@ -4,8 +4,8 @@ import './App.css';
 import ITIList from './components/ITIList';
 import ImportButton from './components/ImportButton';
 
-// Use relative API path so the React dev server can proxy requests to the backend in development.
-const API_URL = '/api';
+// Use environment variable for API URL if available, otherwise use relative path for proxy
+const API_URL = process.env.REACT_APP_API_URL || '/api';
 
 function App() {
   const [itis, setItis] = useState([]);
