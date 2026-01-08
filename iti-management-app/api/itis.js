@@ -6,13 +6,15 @@ import path from 'path';
 
 // Simple in-memory store for demo (use a database in production)
 let itisData = [];
-let initialized = false;
 
-// Initialize with data.json on first load
+// Initialize with data_loaded.json (if present) or data.json when needed
 function initializeData() {
-  if (initialized) return;
+  if (itisData.length > 0) return;
   try {
-    const dataPath = path.join(process.cwd(), 'data.json');
+    const loadPath = path.join(process.cwd(), 'data_loaded.json');
+    const fallbackPath = path.join(process.cwd(), 'data.json');
+    let dataPath = fallbackPath;
+    if (fs.existsSync(loadPath)) dataPath = loadPath;
     if (fs.existsSync(dataPath)) {
       const rawData = fs.readFileSync(dataPath, 'utf8');
       const data = JSON.parse(rawData);
@@ -28,7 +30,6 @@ function initializeData() {
         created_at: new Date().toISOString(),
         updated_at: new Date().toISOString()
       }));
-      initialized = true;
     }
   } catch (err) {
     console.error('Error initializing data:', err);
@@ -58,6 +59,18 @@ export default function handler(req, res) {
   initializeData();
 
   const { method, query, body } = req;
+
+  // Support path-based id: /api/itis/1 -> extract id
+  let pathId = null;
+  try {
+    const rawPath = req.url || '';
+    const pathname = rawPath.split('?')[0];
+    const match = pathname.match(/\/api\/itis\/(\d+)/);
+    if (match) pathId = match[1];
+  } catch (err) {
+    // ignore
+  }
+  if (!query.id && pathId) query.id = pathId;
 
   // GET /api/itis - Get all ITIs
   if (method === 'GET' && !query.id) {
@@ -135,17 +148,23 @@ export default function handler(req, res) {
     return;
   }
 
-  // PUT /api/itis?id=1 - Update ITI status and remarks
+  // PUT /api/itis?id=1 or /api/itis/1 - Update ITI status and remarks
   if (method === 'PUT' && query.id) {
-    const { connected_status, remarks } = body;
-    const iti = itisData.find(i => i.id === parseInt(query.id));
-    if (iti) {
-      iti.connected_status = connected_status || iti.connected_status;
-      iti.remarks = remarks !== undefined ? remarks : iti.remarks;
-      iti.updated_at = new Date().toISOString();
-      res.status(200).json({ message: 'ITI updated successfully' });
-    } else {
-      res.status(404).json({ error: 'ITI not found' });
+    try {
+      const { connected_status, remarks } = body || {};
+      const idi = parseInt(query.id);
+      const iti = itisData.find(i => i.id === idi);
+      if (iti) {
+        if (connected_status) iti.connected_status = connected_status;
+        if (remarks !== undefined) iti.remarks = remarks;
+        iti.updated_at = new Date().toISOString();
+        res.status(200).json({ message: 'ITI updated successfully' });
+      } else {
+        res.status(404).json({ error: 'ITI not found' });
+      }
+    } catch (err) {
+      console.error('Error updating ITI:', err);
+      res.status(500).json({ error: 'Internal server error' });
     }
     return;
   }
