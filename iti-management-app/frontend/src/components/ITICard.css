@@ -19,6 +19,10 @@
   border-left-color: #27ae60;
 }
 
+.iti-card.lead {
+  border-left-color: #ffc107;
+}
+
 .iti-card:hover {
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
   transform: translateY(-2px);
@@ -76,6 +80,8 @@
 .info-item span {
   color: #666;
   word-break: break-word;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
 }
 
 .info-item a {
@@ -96,6 +102,7 @@
 
 .contact-btn {
   flex: 1;
+  min-width: 100px;
   padding: 10px 12px;
   border: 2px solid #e0e0e0;
   border-radius: 6px;
@@ -104,6 +111,9 @@
   font-size: 0.9rem;
   transition: all 0.3s;
   min-width: 130px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .contact-btn:hover:not(:disabled) {
@@ -171,6 +181,8 @@
   font-size: 0.95rem;
   resize: vertical;
   transition: border-color 0.3s;
+  box-sizing: border-box;
+  overflow: auto;
 }
 
 .form-group textarea:focus {
@@ -235,25 +247,106 @@
   color: #27ae60;
 }
 
+.status-badge.lead {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
 .remarks-preview {
   color: #666;
   font-style: italic;
 }
 
+@media (max-width: 768px) {
+  .card-header {
+    padding: 12px;
+  }
+
+  .card-header h3 {
+    font-size: 1.1rem;
+  }
+
+  .card-content {
+    padding: 15px;
+  }
+
+  .contact-buttons {
+    gap: 8px;
+  }
+
+  .contact-btn {
+    min-width: 90px;
+    padding: 8px 10px;
+    font-size: 0.85rem;
+  }
+}
+
 @media (max-width: 480px) {
+  .card-header {
+    padding: 10px;
+  }
+
   .card-header h3 {
     font-size: 1rem;
   }
 
+  .expand-btn {
+    font-size: 1rem;
+    padding: 5px;
+  }
+
+  .card-content {
+    padding: 12px;
+  }
+
+  .info-item {
+    margin-bottom: 10px;
+  }
+
+  .info-item label {
+    font-size: 0.85rem;
+  }
+
+  .info-item span {
+    font-size: 0.95rem;
+  }
+
   .contact-buttons {
     flex-direction: column;
+    gap: 8px;
   }
 
   .contact-btn {
     min-width: auto;
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 0.9rem;
   }
 
   .status-options {
     flex-direction: column;
+    gap: 12px;
+  }
+
+  .radio-label {
+    font-size: 0.95rem;
+  }
+
+  .form-group textarea {
+    padding: 8px;
+    font-size: 0.9rem;
+  }
+
+  .save-btn {
+    padding: 10px;
+    font-size: 0.95rem;
+  }
+
+  .card-footer {
+    padding: 12px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 0.85rem;
   }
 }

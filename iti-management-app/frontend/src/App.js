@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './App.css';
 import ITIList from './components/ITIList';
-import ImportButton from './components/ImportButton';
 import UploadButton from './components/UploadButton';
 
 // Use environment variable for API URL if available, otherwise use relative path for proxy
@@ -68,7 +67,6 @@ function App() {
 
       <main className="app-main">
         <div className="controls">
-          <ImportButton onImport={handleImport} />
           <UploadButton onUploadSuccess={handleUploadSuccess} />
         </div>
 

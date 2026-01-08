@@ -6,7 +6,7 @@
 .app-header {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
-  padding: 40px 20px;
+  padding: 30px 20px;
   text-align: center;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
@@ -24,13 +24,21 @@
 .app-main {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 30px 20px;
+  padding: 20px 15px;
 }
 
 .controls {
   margin-bottom: 30px;
   display: flex;
-  gap: 10px;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  align-items: center;
+}
+
+.controls > * {
+  flex: 1;
+  min-width: 200px;
 }
 
 .error-message {
@@ -47,4 +55,76 @@
   padding: 40px;
   color: white;
   font-size: 1.2rem;
+}
+
+@media (max-width: 768px) {
+  .app-header {
+    padding: 20px 15px;
+  }
+
+  .app-header h1 {
+    font-size: 1.8rem;
+  }
+
+  .app-header p {
+    font-size: 1rem;
+  }
+
+  .app-main {
+    padding: 15px 10px;
+  }
+
+  .controls {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .controls > * {
+    min-width: auto;
+    width: 100%;
+  }
+
+  .error-message {
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .app-header {
+    padding: 15px 10px;
+  }
+
+  .app-header h1 {
+    font-size: 1.5rem;
+    margin-bottom: 5px;
+  }
+
+  .app-header p {
+    font-size: 0.9rem;
+  }
+
+  .app-main {
+    padding: 10px;
+  }
+
+  .controls {
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+
+  .controls > * {
+    width: 100%;
+  }
+
+  .error-message {
+    padding: 12px;
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+  }
+
+  .loading {
+    padding: 30px 15px;
+    font-size: 1rem;
+  }
 }

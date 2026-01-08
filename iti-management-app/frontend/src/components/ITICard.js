@@ -109,6 +109,16 @@ function ITICard({ iti, onStatusUpdate }) {
                 />
                 Connected
               </label>
+              <label className="radio-label">
+                <input
+                  type="radio"
+                  name={`status-${iti.id}`}
+                  value="lead"
+                  checked={status === 'lead'}
+                  onChange={(e) => setStatus(e.target.value)}
+                />
+                Lead
+              </label>
             </div>
           </div>
 
@@ -137,6 +147,7 @@ function ITICard({ iti, onStatusUpdate }) {
           {status === 'not_connected' && '❌ Not Connected'}
           {status === 'pending' && '⏳ Pending'}
           {status === 'connected' && '✅ Connected'}
+          {status === 'lead' && '⭐ Lead'}
         </span>
         {iti.remarks && (
           <span className="remarks-preview">

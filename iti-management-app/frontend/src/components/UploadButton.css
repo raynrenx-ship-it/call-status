@@ -1,29 +1,48 @@
 .upload-button-container {
   display: inline-block;
+  width: 100%;
 }
 
 .btn-upload {
   background-color: #4caf50;
   color: white;
-  padding: 10px 20px;
+  padding: 12px 24px;
   border: none;
-  border-radius: 4px;
+  border-radius: 6px;
   cursor: pointer;
-  font-size: 14px;
-  font-weight: 500;
-  transition: background-color 0.3s ease;
-  margin-right: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  width: 100%;
+  box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
 }
 
-.btn-upload:hover {
+.btn-upload:hover:not(:disabled) {
   background-color: #45a049;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(76, 175, 80, 0.4);
 }
 
-.btn-upload:active {
-  transform: scale(0.98);
+.btn-upload:active:not(:disabled) {
+  transform: translateY(0);
 }
 
 .btn-upload:disabled {
   background-color: #cccccc;
   cursor: not-allowed;
+  opacity: 0.7;
+}
+
+@media (max-width: 768px) {
+  .btn-upload {
+    padding: 11px 20px;
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .btn-upload {
+    padding: 10px 16px;
+    font-size: 0.9rem;
+  }
 }
