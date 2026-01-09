@@ -44,6 +44,7 @@ function ITIList({ itis, onStatusUpdate }) {
             <option value="not_connected">Not Connected</option>
             <option value="connected">Connected</option>
             <option value="pending">Pending</option>
+            <option value="rejected">Rejected</option>
             <option value="lead">Lead</option>
           </select>
         </div>
@@ -73,6 +74,14 @@ function ITIList({ itis, onStatusUpdate }) {
           <span className="stat-label">Not Connected</span>
           <span className="stat-value">{itis.filter(i => i.connected_status === 'not_connected').length}</span>
         </div>
+        <div className="stat-card">
+          <span className="stat-label">Pending</span>
+          <span className="stat-value">{itis.filter(i => i.connected_status === 'pending').length}</span>
+        </div>
+        <div className="stat-card">
+          <span className="stat-label">Lead</span>
+          <span className="stat-value">{itis.filter(i => i.connected_status === 'lead').length}</span>
+        </div>
       </div>
 
       <div className="iti-grid">
@@ -85,7 +94,7 @@ function ITIList({ itis, onStatusUpdate }) {
             />
           ))
         ) : (
-          <div className="no-results">No ITIs found</div>
+          <div className="no-results">No data found</div>
         )}
       </div>
     </div>

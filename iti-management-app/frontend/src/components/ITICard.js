@@ -118,6 +118,16 @@ function ITICard({ iti, onStatusUpdate }) {
                 <input
                   type="radio"
                   name={`status-${iti.id}`}
+                  value="rejected"
+                  checked={status === 'rejected'}
+                  onChange={(e) => setStatus(e.target.value)}
+                />
+                Rejected
+              </label>
+              <label className="radio-label">
+                <input
+                  type="radio"
+                  name={`status-${iti.id}`}
                   value="lead"
                   checked={status === 'lead'}
                   onChange={(e) => setStatus(e.target.value)}
@@ -152,7 +162,9 @@ function ITICard({ iti, onStatusUpdate }) {
         <span className={`status-badge ${status}`}>
           {status === 'not_connected' && '❌ Not Connected'}
           {status === 'pending' && '⏳ Pending'}
+          {status === 'pending' && '⏳ Pending'}
           {status === 'connected' && '✅ Connected'}
+          {status === 'rejected' && '❌ Rejected'}
           {status === 'lead' && '⭐ Lead'}
         </span>
         {iti.remarks && (
