@@ -56,6 +56,7 @@ function UploadButton({ onUploadSuccess }) {
         style={{ display: 'none' }}
       />
       <button
+        type="button"
         className="btn btn-upload"
         onClick={() => fileInputRef.current?.click()}
         title="Upload a data.json file"

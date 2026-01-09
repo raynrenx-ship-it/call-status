@@ -30,6 +30,7 @@ function ITICard({ iti, onStatusUpdate }) {
       <div className="card-header">
         <h3>{iti.iti_name}</h3>
         <button 
+          type="button"
           className="expand-btn"
           onClick={() => setIsExpanded(!isExpanded)}
         >
@@ -58,6 +59,7 @@ function ITICard({ iti, onStatusUpdate }) {
 
         <div className="contact-buttons">
           <button 
+            type="button"
             className="contact-btn phone-btn"
             onClick={handlePhoneClick}
             disabled={!iti.contact_phone}
@@ -65,6 +67,7 @@ function ITICard({ iti, onStatusUpdate }) {
             📞 {iti.contact_phone || 'No Phone'}
           </button>
           <button 
+            type="button"
             className="contact-btn email-btn"
             onClick={handleEmailClick}
             disabled={!iti.contact_email}
@@ -133,6 +136,7 @@ function ITICard({ iti, onStatusUpdate }) {
           </div>
 
           <button 
+            type="button"
             className="save-btn"
             onClick={handleSave}
             disabled={isSaving}
