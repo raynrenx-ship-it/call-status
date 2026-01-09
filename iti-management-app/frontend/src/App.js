@@ -45,17 +45,33 @@ function App() {
     fetchItis();
   };
 
-  const handleStatusUpdate = async (id, status, remarks) => {
-    try {
-      await axios.put(`${API_URL}/itis/${id}`, {
+  const handleStatusUpdate = (id, status, remarks) => {
+    // Optimistic UI update: update state immediately
+    const prevIti = itis.find((i) => i.id === id);
+    const prevStatus = prevIti?.connected_status;
+    const prevRemarks = prevIti?.remarks;
+
+    setItis((prev) =>
+      prev.map((i) => (i.id === id ? { ...i, connected_status: status, remarks, updated_at: new Date().toISOString() } : i))
+    );
+
+    // Send update in background; revert on error
+    axios
+      .put(`${API_URL}/itis/${id}`, {
         connected_status: status,
-        remarks: remarks
+        remarks: remarks,
+      })
+      .then(() => {
+        // success - nothing more to do (state already updated)
+      })
+      .catch((err) => {
+        // Revert optimistic update
+        setItis((current) =>
+          current.map((i) => (i.id === id ? { ...i, connected_status: prevStatus, remarks: prevRemarks } : i))
+        );
+        alert('Failed to update ITI');
+        console.error(err);
       });
-      fetchItis();
-    } catch (err) {
-      alert('Failed to update ITI');
-      console.error(err);
-    }
   };
 
   return (

@@ -5,6 +5,7 @@ import './ITIList.css';
 function ITIList({ itis, onStatusUpdate }) {
   const [searchTerm, setSearchTerm] = useState('');
   const [filterStatus, setFilterStatus] = useState('all');
+  const [district, setDistrict] = useState('all');
 
   const filteredItis = itis.filter((iti) => {
     const matchesSearch = 
@@ -16,7 +17,10 @@ function ITIList({ itis, onStatusUpdate }) {
       filterStatus === 'all' || 
       iti.connected_status === filterStatus;
 
-    return matchesSearch && matchesStatus;
+    const matchesDistrict =
+      district === 'all' ||
+      iti.district === district;
+    return matchesSearch && matchesStatus && matchesDistrict;
   });
 
   return (
@@ -40,6 +44,18 @@ function ITIList({ itis, onStatusUpdate }) {
             <option value="not_connected">Not Connected</option>
             <option value="connected">Connected</option>
             <option value="pending">Pending</option>
+            <option value="lead">Lead</option>
+          </select>
+        </div>
+        <div className='filter-box'>
+          <select
+          value ={district}
+          onChange={(e) => setDistrict(e.target.value)}
+          >
+            <option value="all">All Districts</option>
+            {[...new Set(itis.map(i => i.district).filter(d => d))].map((dist) => (
+              <option key={dist} value={dist}>{dist}</option>
+            ))}
           </select>
         </div>
       </div>

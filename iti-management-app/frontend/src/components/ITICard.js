@@ -8,9 +8,11 @@ function ITICard({ iti, onStatusUpdate }) {
   const [isSaving, setIsSaving] = useState(false);
 
   const handleSave = async () => {
+    console.log('handleSave: start', iti.id, status);
     setIsSaving(true);
     await onStatusUpdate(iti.id, status, remarks);
     setIsSaving(false);
+    console.log('handleSave: done', iti.id);
   };
 
   const handlePhoneClick = () => {
@@ -138,7 +140,7 @@ function ITICard({ iti, onStatusUpdate }) {
           <button 
             type="button"
             className="save-btn"
-            onClick={handleSave}
+            onClick={(e) => { e.preventDefault(); e.stopPropagation(); handleSave(); }}
             disabled={isSaving}
           >
             {isSaving ? 'Saving...' : 'Save Changes'}

@@ -88,7 +88,7 @@ app.get('/api/itis/:id', async (req, res) => {
 // Create new ITI
 app.post('/api/itis', async (req, res) => {
   try {
-    const { iti_name, website_url, address, contact_phone, contact_email } = req.body;
+    const { iti_name, website_url, district, address, contact_phone, contact_email } = req.body;
     const itisCollection = db.collection('itis');
     
     // Get max id
@@ -99,6 +99,7 @@ app.post('/api/itis', async (req, res) => {
       id: newId,
       iti_name,
       website_url: website_url || '',
+      district: district || '',
       address: address || '',
       contact_phone: contact_phone || '',
       contact_email: contact_email || '',
@@ -200,6 +201,7 @@ app.post('/api/import', async (req, res) => {
         id: nextId,
         iti_name,
         website_url: iti['Website URL'] || '',
+        district: iti['District'] || '',
         address: iti['Address'] || '',
         contact_phone: iti['Contact Phone Number'] || '',
         contact_email: iti['Contact Email'] || '',
@@ -254,6 +256,7 @@ app.post('/api/upload', async (req, res) => {
         id: nextId,
         iti_name,
         website_url: iti['Website URL'] || iti.website_url || '',
+        district: iti['District'] || iti.district || '',
         address: iti['Address'] || iti.address || '',
         contact_phone: iti['Contact Phone Number'] || iti.contact_phone || '',
         contact_email: iti['Contact Email'] || iti.contact_email || '',
