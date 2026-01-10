@@ -6,6 +6,7 @@ function ITIList({ itis, onStatusUpdate }) {
   const [searchTerm, setSearchTerm] = useState('');
   const [filterStatus, setFilterStatus] = useState('all');
   const [district, setDistrict] = useState('all');
+  const [status, setStatus] = useState('all');
 
   const filteredItis = itis.filter((iti) => {
     const matchesSearch = 
@@ -20,7 +21,19 @@ function ITIList({ itis, onStatusUpdate }) {
     const matchesDistrict =
       district === 'all' ||
       iti.district === district;
-    return matchesSearch && matchesStatus && matchesDistrict;
+
+    const hasPhoneNumber = () => {
+  if (status === 'all') {
+    return true; // Show all phone numbers regardless of length
+  } else if (status === 'valid') {
+    return iti.contact_phone?.length === 10; // Only valid phone numbers (length = 10)
+  } else if (status === 'invalid') {
+    return iti.contact_phone?.length !== 10; // Only invalid phone numbers (length != 10)
+  }
+  return false; // Default case if none of the conditions match
+};
+
+    return matchesSearch && matchesStatus && matchesDistrict && hasPhoneNumber();
   });
 
   return (
@@ -35,6 +48,30 @@ function ITIList({ itis, onStatusUpdate }) {
           />
         </div>
 
+        <div className='filter-box'>
+          <select
+          value ={district}
+          onChange={(e) => setDistrict(e.target.value)}
+          >
+            <option value="all">All Districts</option>
+            {[...new Set(itis.map(i => i.district).filter(d => d))].map((dist) => (
+              <option key={dist} value={dist}>{dist}</option>
+            ))}
+          </select>
+        </div>
+
+        <div className='filter-box'>
+          <select
+          value ={status}
+          onChange={(e) => setStatus(e.target.value)}
+          >
+            <option value="all">All Contact</option>
+            <option value="valid">Valid Contact</option>
+            <option value="invalid">Invalid Contact</option>
+
+          </select>
+        </div>
+        
         <div className="filter-box">
           <select 
             value={filterStatus} 
@@ -48,39 +85,29 @@ function ITIList({ itis, onStatusUpdate }) {
             <option value="lead">Lead</option>
           </select>
         </div>
-        <div className='filter-box'>
-          <select
-          value ={district}
-          onChange={(e) => setDistrict(e.target.value)}
-          >
-            <option value="all">All Districts</option>
-            {[...new Set(itis.map(i => i.district).filter(d => d))].map((dist) => (
-              <option key={dist} value={dist}>{dist}</option>
-            ))}
-          </select>
-        </div>
+
       </div>
 
       <div className="stats">
         <div className="stat-card">
           <span className="stat-label">Total ITIs</span>
-          <span className="stat-value">{itis.length}</span>
+          <span className="stat-value">{filteredItis.length}</span>
         </div>
         <div className="stat-card">
           <span className="stat-label">Connected</span>
-          <span className="stat-value">{itis.filter(i => i.connected_status === 'connected').length}</span>
+          <span className="stat-value">{filteredItis.filter(i => i.connected_status === 'connected').length}</span>
         </div>
         <div className="stat-card">
           <span className="stat-label">Not Connected</span>
-          <span className="stat-value">{itis.filter(i => i.connected_status === 'not_connected').length}</span>
+          <span className="stat-value">{filteredItis.filter(i => i.connected_status === 'not_connected').length}</span>
         </div>
         <div className="stat-card">
           <span className="stat-label">Pending</span>
-          <span className="stat-value">{itis.filter(i => i.connected_status === 'pending').length}</span>
+          <span className="stat-value">{filteredItis.filter(i => i.connected_status === 'pending').length}</span>
         </div>
         <div className="stat-card">
           <span className="stat-label">Lead</span>
-          <span className="stat-value">{itis.filter(i => i.connected_status === 'lead').length}</span>
+          <span className="stat-value">{filteredItis.filter(i => i.connected_status === 'lead').length}</span>
         </div>
       </div>
 
